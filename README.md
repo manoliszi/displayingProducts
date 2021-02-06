@@ -33,11 +33,11 @@ This picture shows the sorting mechanism for the first page.
 
 We can type a number in the input section and then press the button to find that product.
 ![alt text](readme-assets/test-3.png)
-Here we see the outcome that we have if we press the search button with a number that is contained in the page.
+Here we see the outcome that we have if we press the search button with a number that is contained in the table of the database.
 
 
 ![alt text](readme-assets/test-4.png)
-Here we can see the outcome that we have if we press the search button with a number that is not contained in the page.
+Here we can see the outcome that we have if we press the search button with a number that is not contained in the table of the dataset.
 
 
 We can always press the `Reset` button to reset the page and provide again with all the divs.

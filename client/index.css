@@ -1,64 +1,96 @@
+body {
+  font-family: Arial;
+  margin: 0 10px 0 10px;
+  background-color: #fafafa;
+}
+h1 {
+  text-align: center;
+}
+
 .product {
-    border: 1px solid #000;
-    margin-top: 10px;
-    padding: 10px;
-    font-size: 17px;
+  border: 1px solid #000;
+  margin-top: 10px;
+  padding: 10px;
+  font-size: 17px;
+  background-image: linear-gradient(180deg, #fff, #ddd 80%, #ccc);
 }
 
 .products-container {
-    position: relative;
+  position: relative;
 }
 
 .sort-button {
-    font-size: 17px;
-    padding: 10px;
-    color: white;
-    background-color: #2196F3;
-    border: 1px solid grey;
-    margin-bottom: 10px;
-    cursor: pointer;
+  font-size: 17px;
+  padding: 10px;
+  color: white;
+  background-color: #2196F3;
+  border: 1px solid grey;
+  margin-bottom: 10px;
+  cursor: pointer;
 }
 .sort-button:hover {
-    background: #0b7dda;
-  }
+  background: #0b7dda;
+}
 
 input[type=number] {
-    padding: 10px;
-    font-size: 17px;
-    border: 1px solid grey;
-    background: #f1f1f1;
-    width: 16%;
-  }
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  background: #f1f1f1;
+  width: 16%;
+}
   
- .search-button {
-    padding: 10px;
-    background: #2196F3;
-    color: white;
-    font-size: 17px;
-    border: 1px solid grey;
-    border-left: none;
-    cursor: pointer;
-    margin-left: -4px;
-  }
+.search-button {
+  padding: 10px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+  margin-left: -4px;
+}
   
 .search-button:hover {
-    background: #0b7dda;
-  }
+  background: #0b7dda;
+}
 
 .pagination {
-    display: flex;
-    width: 60%;
-    justify-content: space-around;
-    top: 100%;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    margin: auto;
-    margin-top: 50px;
+  display: flex;
+  width: 60%;
+  justify-content: center;
+  top: 100%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  margin-top: 50px;
+  margin-bottom: 30px;
 }
 
 .pagination-button {
-    border: none;
-    background: transparent;
-    cursor: pointer
+  border: none;
+  background: transparent;
+  cursor: pointer
+}
+
+.arrow-buttons {
+  color: #707070;
+}
+
+.arrow-buttons:hover {
+  color: #000;
+}
+
+.pagination-element {
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
+}
+
+.no-results {
+  text-align: center;
+  font-size: 20px;
+  margin: 20px 0 20px 0;
 }

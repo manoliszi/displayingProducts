@@ -8,161 +8,33 @@
     <link rel="stylesheet" href="index.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="index.js"></script>
 </head>
-<body>
-
-    <h1>
-        Products
-    </h1>
-
-    <button onclick="sortPage()" class="sort-button">
-        Sort page
-    </button>
-    <br>
-    <input type="number" min="0" placeholder="Search using serial Number..." name="search" class="search-input">
-    <button onclick="searchPage()" class="search-button"><i class="fa fa-search"></i></button>
-    <button onclick="resetSearchPage()" class="search-button">Reset</button>
+<body onload="fetchData()">
 
     <div class="products-container">
-        <div class="product">
+        <h1>
+            Products
+        </h1>
+    
+        <button onclick="sortPage()" class="sort-button">
+            Sort page
+        </button>
+        <br>
+        <input type="number" min="0" placeholder="Search using serial Number..." name="search" class="search-input">
+        <button onclick="searchPage()" class="search-button"><i class="fa fa-search"></i></button>
+        <button onclick="resetSearchPage()" class="search-button">Reset</button>
+    
+        <div id="product-area">
         </div>
-        <div class="product">
-        </div>
-        <div class="product">
-        </div>
-        <div class="product">
-        </div>
-        <div class="product">
-        </div>
-        <div class="product">
-        </div>
-        <div class="product">
-        </div>
-        <div class="product">
-        </div>
-        <div class="product">
-        </div>
-        <div class="product">
+        <div id="search-result-area">
         </div>
 
         <div class="pagination">
-            <button class="pagination-button" onclick="pagination('left');"><i class="fas fa-angle-left"></i></button>
-            <div class="page-number">1</div>
-            <div class="page-number">2</div>
-            <div class="page-number">...</div>
-            <div class="page-number">1000000</div>
-            <button class="pagination-button" onclick="pagination('right');"><i class="fas fa-angle-right"></i></button>
+            <button class="pagination-button pagination-element" onclick="pagination('left');"><i class="fas fa-angle-left fa-lg arrow-buttons"></i></button>
+            <div class="page-number pagination-element">1</div>
+            <button class="pagination-button pagination-element" onclick="pagination('right');"><i class="fas fa-angle-right fa-lg arrow-buttons"></i></button>
         </div>
 
     </div>
-
-    <script>
-        var obj; 
-
-        fetch('http://localhost:3000/products/?page=1')
-        .then(res => res.json())
-        .then(data => obj = data)
-        .then(() => {
-            let i = 0;
-            for(i; i < 10; i++) {
-                // display it backwards so we can sort it
-                if(obj[i] !== undefined) {
-                    document.getElementsByClassName("product")[9 - i].innerHTML = obj[i].serialNumber + " " + obj[i].name + " " + obj[i].description;
-                }               
-            }
-        });
-        
-        function sortPage() {
-            $('.product').sort(function(a, b) {
-                let innerA = a.innerHTML;
-                let innerB = b.innerHTML;
-                let numberA = innerA.split(" ")[0];
-                let numberB = innerB.split(" ")[0];
-
-                if (Number(numberA) < Number(numberB)) {
-                    return -1;
-                } else {
-                    return 1;
-                }
-            }).appendTo('body');
-            $('.pagination').appendTo('body');
-        }
-
-
-        function searchPage() {
-            var serialNumber = document.getElementsByClassName("search-input")[0].value;
-
-            if(serialNumber === "")
-                return;
-
-            let i = 0;
-            for(i; i < 10; i++) {
-                let innerOfProduct = document.getElementsByClassName("product")[i].innerHTML;
-                let serialNumberOfProduct = innerOfProduct.split(" ")[0];
-                if(Number(serialNumber) !== Number(serialNumberOfProduct)) {
-                    document.getElementsByClassName("product")[i].style.display = "none";
-                }
-            }
-        }     
-        
-        function resetSearchPage() {
-            let i = 0;
-            for(i; i < 10; i++) {
-                document.getElementsByClassName("product")[i].style.display = "block";
-            }
-        }
-
-        var preLastElement = false;
-        var countToFindLastElement = 0;
-        var page = 1;
-        function pagination(direction) {
-
-            /*change the numbers of pagination according to direction*/
-            
-            if((direction === 'left' && Number(document.getElementsByClassName("page-number")[0].innerHTML) === 1) || (preLastElement && countToFindLastElement === 3 && direction === 'right')) {
-                //no action. cant go more left or right
-                return;
-            }
-
-            if(direction === 'right' && (document.getElementsByClassName("page-number")[0].innerHTML < (document.getElementsByClassName("page-number")[3].innerHTML - 3))) {
-                document.getElementsByClassName("page-number")[0].innerHTML = Number(document.getElementsByClassName("page-number")[0].innerHTML) + 1;
-                document.getElementsByClassName("page-number")[1].innerHTML = Number(document.getElementsByClassName("page-number")[1].innerHTML) + 1;
-            }
-            else if(direction === 'right' && (document.getElementsByClassName("page-number")[0].innerHTML == (document.getElementsByClassName("page-number")[3].innerHTML - 3))) {
-                document.getElementsByClassName("page-number")[2].innerHTML = 9999999;
-                preLastElement = true;
-                countToFindLastElement++;
-            }
-            else if(direction === 'left' && countToFindLastElement > 0) {
-                document.getElementsByClassName("page-number")[0].innerHTML = Number(document.getElementsByClassName("page-number")[0].innerHTML) - 1;
-                document.getElementsByClassName("page-number")[1].innerHTML = Number(document.getElementsByClassName("page-number")[1].innerHTML) - 1;
-                document.getElementsByClassName("page-number")[2].innerHTML = Number(document.getElementsByClassName("page-number")[2].innerHTML) - 1;
-                countToFindLastElement--;
-            }
-            else if(direction === 'left' && countToFindLastElement === 0) {
-                document.getElementsByClassName("page-number")[0].innerHTML = Number(document.getElementsByClassName("page-number")[0].innerHTML) - 1;
-                document.getElementsByClassName("page-number")[1].innerHTML = Number(document.getElementsByClassName("page-number")[1].innerHTML) - 1;
-                document.getElementsByClassName("page-number")[2].innerHTML = "...";
-            }
-
-            /*change body content*/
-            if(direction === 'left')
-                page -= 1;
-            else if(direction === 'right')
-                page += 1;
-
-            fetch(`http://localhost:3000/products/?page=${page}`)
-            .then(res => res.json())
-            .then(data => obj = data)
-            .then(() => {
-                let i = 0;
-                for(i; i < 10; i++) {
-                    // display it backwards so we can sort it
-                    if(obj[i] !== undefined) {
-                        document.getElementsByClassName("product")[9 - i].innerHTML = obj[i].serialNumber + " " + obj[i].name + " " + obj[i].description;
-                    }               
-                }
-            });
-        }
-    </script>
 </body>

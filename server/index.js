@@ -1,9 +1,7 @@
 var mysql = require('mysql');
 var express = require('express');
 var Promise = require('bluebird');
-var bodyParser = require('body-parser');
 var app = express();
-const path = require('path');
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -26,22 +24,26 @@ app.use(function(req, res, next) {
     next();
 });
 
-
-function handleUserScores(result) {
-    return result.reduce((acc, product) => {
-      acc.push({serialNumber: product.serialNumber, name: product.name, description: product.description})
-      return acc
-    }, [])
-}
-
 app.get('/products', (req, res) => {
   const page = parseInt(req.query.page);
   const startingPoint = (page - 1) * 10;
 
   queryAsync(`SELECT * FROM product_table LIMIT ${startingPoint}, 10`)
   .then(function(result){
-    const products = handleUserScores(result)
-    res.send(products)
+    res.send(result)
+  })
+  .catch(function(err) {
+    console.error(err);
+    res.json({ err: err });
+  });
+})
+
+app.get('/product', (req, res) => {
+  const id = parseInt(req.query.id);
+
+  queryAsync(`SELECT * FROM product_table WHERE serialNumber=${id}`)
+  .then(function(result){
+    res.send(result)
   })
   .catch(function(err) {
     console.error(err);

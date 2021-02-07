@@ -67,6 +67,8 @@ function searchPage() {
             }            
         }
     });
+
+    document.getElementsByClassName("pagination")[0].style.display = "none";
 }     
 
 function resetSearchPage() {
@@ -76,6 +78,8 @@ function resetSearchPage() {
 
     const parentDiv = document.getElementById("search-result-area");
     parentDiv.innerHTML = '';
+
+    document.getElementsByClassName("pagination")[0].style.display = "flex";
 }
 
 var preLastElement = false;
